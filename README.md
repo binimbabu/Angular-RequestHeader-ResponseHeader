@@ -1,27 +1,89 @@
-# HttpService
+Http calls are asynchronous calls which will hit the network and get the data from the server or from the database. Http calls (eg: get, put, patch, delete, update) are asynchronous data and handle asynchronous data by observable pattern.
+ 
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.2.
+Http Request header
+Http Request Headers are used to pass header as key value to the backend.
 
-## Development server
+Http Request headers have method like ‘set’ which is used to set key and a value along with the initial header. 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+const httpHeaders = new HttpHeaders({
+Authorization': 'Sample Auth Token'
+})
+return this.http.get('https://jsonplaceholder.typicode.com/todos', {
+headers : httpHeaders
+});
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+Http Request header with append method with the already existing key will append the previous value and the new value along with the already existing key. 
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+const httpHeaders = new HttpHeaders({
+'Authorization': 'Sample Auth Token'
+})
+const updatedHeader = httpHeaders.set('channel', 'Bini');
+return this.http.get('https://jsonplaceholder.typicode.com/todos', {
+headers : updatedHeader
+});
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Http Request header which has key channel with value ‘Babu’ , and the header is set with  Bini then the initial value (Babu) will be replaced with (Bini)
 
-## Running end-to-end tests
+const httpHeaders = new HttpHeaders({
+'Authorization': 'Sample Auth Token',
+channel: 'Babu'
+})
+const updatedHeader = httpHeaders.set('channel', 'Bini');
+return this.http.get('https://jsonplaceholder.typicode.com/todos', {
+headers : updatedHeader
+});
+}
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
+Http Request header with get and passing key as argument the value assigned to key will be available.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+const httpHeaders = new HttpHeaders({
+'Authorization': 'Sample Auth Token',
+channel: 'Babu'
+})
+const updatedHeader = httpHeaders.set('channel', 'Bini');
+httpHeaders.get('channel');
+return this.http.get('https://jsonplaceholder.typicode.com/todos', {
+headers : updatedHeader
+});
+}
+
+
+Http Response header
+Http Response Header are used when you download a video and you want to get the file name of the video downloaded. Servers wont sent the filename to preview int the network tab instead they provide the static data (eg: here filename of video) into the response header. When the filename before downloaded the backend team will pass the filename as response along with the api where the filename we are going to download.
+Http Response Header are used to capture data passed along with the api as response
+
+return this.http.get('https://jsonplaceholder.typicode.com/todos', {
+observe: 'response'
+})
+
+To get the header value in ts file we will pass the options as 
+
+{
+observe: 'response'
+}
+
+
+observe not only observe the result or the payload provided by the api call, but also observes the response headers
+
+
+this.apiService.getToUsers().subscribe((data: HttpResponse<any>)=>{
+console.log("Data", data.body);
+console.log("Headers", data.headers.keys());
+})
+
+When ‘data: HttpResponse<any>’ is given the data from the api is available only if we provide  data.body.
+To get all the keys from the Response headers we use to give ‘data.headers.keys()’
+To get a key with one particular key ‘content-type’ 
+‘data.headers.get('content-type')’
+
+To get all the key values we can loop through the for loop
+
+data.headers.keys().forEach((key: any)=>{
+console.log(data.headers.get(key));
+})
+
