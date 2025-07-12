@@ -1,5 +1,6 @@
 Http calls are asynchronous calls which will hit the network and get the data from the server or from the database. Http calls (eg: get, put, patch, delete, update) are asynchronous data and handle asynchronous data by observable pattern.
  
+In the context of REST APIs, the PUT and PATCH methods are both used for updating resources, but they differ in their approach. PUT replaces the entire resource with the data provided in the request, while PATCH modifies only the specific fields provided in the request, leaving the rest of the resource unchanged. 
 
 Http Request header
 Http Request Headers are used to pass header as key value to the backend.
